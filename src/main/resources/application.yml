@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    password: 1997sinaWx
+    username: root
+    url: jdbc:mysql://localhost:3306/first_mysql_test?useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mvc:
+    static-path-pattern: /image/**
+  resources:
+    static-locations: file:F:/soft/apache-tomcat-9.0.4/webapps/ #file:D:/0/image/user/
+
+logging:
+    level:
+          com: debug
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.winter.model  # 注意：对应实体类的路径
+
+#pagehelper分页插件
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+#配置静态资源前后缀
+spring.thymeleaf.prefix:
+    classpath: F:/soft/apache-tomcat-9.0.4/webapps/images #D:/0/image/
+# 设置单个文件最大内存
+multipart.maxFileSize: 50Mb
+# 设置所有文件最大内存
+multipart.maxRequestSize: 50Mb
+# 自定义文件上传路径
+web.upload-path: F:/soft/apache-tomcat-9.0.4/webapps/images #D:/0/image/user/
+##redis配置
+## Redis数据库索引（默认为0）
+#spring.redis.database: 0
+## Redis服务器地址
+#spring.redis.host: localhost
+## Redis服务器连接端口
+#spring.redis.port: 6379
+## Redis服务器连接密码（默认为空）
+#spring.redis.password:
+## 连接池最大连接数（使用负值表示没有限制）
+##spring.redis.pool.max-active: 8
+## 连接池最大阻塞等待时间（使用负值表示没有限制）
+##spring.redis.pool.max-wait: -1
+## 连接池中的最大空闲连接
+##spring.redis.pool.max-idle: 8
+## 连接池中的最小空闲连接
+##spring.redis.pool.min-idle: 0
+## 连接超时时间（毫秒）
+#spring.redis.timeout:
+##最大空闲时间，数据库连接的最大空闲时间。超过空闲时间，数据库连接将被标记为不可用，然后被释放。设为0表示无限制。
+#redis.maxIdle: 300
+##连接池的最大数据库连接数。设为0表示无限制
+#redis.maxActive: 600
+##最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+#redis.maxWait: 1000
+##在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
+#redis.testOnBorrow: true
+
+
