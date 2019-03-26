@@ -53,6 +53,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +95,12 @@ public class UserController {
 
     @Autowired
     private SearchHistoryDao searchHistoryDao;
+
+    @Autowired
+    private TypesDao typesDao;
+
+    @Autowired
+    private StepsDao stepsDao;
     /**
      * function：注册
      * @param userInfo
@@ -181,28 +188,7 @@ public class UserController {
         UserInfo userInfo = userDao.findByUid(user.getUid());
         Msg response = new Msg();
         String image = user.getToken();
-        image = image.replaceAll("data:image/jpeg;base64,", "");
-//        BASE64Decoder decoder = new BASE64Decoder();
-        Decoder decoder = java.util.Base64.getDecoder();
-        byte[] imageByte = decoder.decode(image);
-        for (int i = 0; i < imageByte.length; ++i) {
-            if (imageByte[i] < 0) {// 调整异常数据
-                imageByte[i] += 256;
-            }
-        }
-        String fileName = "D:\\0\\image\\user\\"+user.getImage();
-        try {
-            File imageFile = new File(fileName);
-            if (!imageFile.exists()) {
-                imageFile.createNewFile();
-            }
-            OutputStream imageStream = new FileOutputStream(imageFile);
-            imageStream.write(imageByte);
-            imageStream.flush();
-            imageStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        putImage(image,user.getImage());
         if (userInfo != null) {
             userDao.updateInfo(user.getUid(),user.getUserName(),user.getSex(),user.getIntro(),user.getImage());
             response.setSuccess(true);
@@ -674,5 +660,87 @@ public class UserController {
         response.setMessage("删除成功");
         response.setErrorCode(0);
         return response;
+    }
+
+    /**
+     *保存菜谱的基本信息
+     */
+    @RequestMapping(value = "putRecipe",method = RequestMethod.PUT)
+    public Msg putRecipe(@RequestBody Recipe recipe) {
+        Msg msg = new Msg();
+        String image = recipe.getImage();
+        String imageName = String.valueOf(recipe.getUid())+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".jpg";
+        //保存图片
+        putImage(image,imageName);
+        //保存菜谱基本数据
+        recipeDao.inserRecipe(recipe.getUid(),recipe.getTitle(),recipe.getIntro(),recipe.getIngs(),imageName);
+        msg.setSuccess(true);
+        msg.setErrorCode(0);
+        msg.setMessage("上传成功");
+        return msg;
+    }
+
+    /**
+     * 保存菜谱步骤（重难点）
+     */
+    @RequestMapping(value = "putSteps",method = RequestMethod.PUT)
+    public Msg putSteps(@RequestBody List<Steps> stepsList) {
+        Msg msg = new Msg();
+        int n = stepsList.size();
+        for (int i=0;i<n;i++)
+        {
+            Steps step = stepsList.get(i);
+            String image = step.getStepImgs();
+            String imageName = String.valueOf(step.getReid())+"-"+String.valueOf(i+1)+".jpg";
+            stepsDao.inserStep(step.getReid(),i+1,step.getSteps(),imageName);
+            putImage(image,imageName);
+        }
+        return msg;
+    }
+    /**
+     * 获取菜谱类别表
+     */
+    @RequestMapping(value = "recipeType",method = RequestMethod.GET)
+    public Msg getAllTypes() {
+        Msg msg = new Msg();
+        List<Types> list = typesDao.findAll();
+        if (list.size() != 0) {
+            msg.setMessage("查找成功");
+            msg.setErrorCode(0);
+            msg.setSuccess(true);
+            msg.setData(list);
+        }
+        else {
+            msg.setData(list);
+            msg.setSuccess(true);
+            msg.setErrorCode(404);
+            msg.setMessage("未找到");
+        }
+        return msg;
+    }
+
+    //base64格式保存图片到本地服务器中
+    void putImage(String image,String imageName) {
+        image = image.replaceAll("data:image/jpeg;base64,", "");
+        Decoder decoder = java.util.Base64.getDecoder();
+        byte[] imageByte = decoder.decode(image);
+        for (int i = 0; i < imageByte.length; ++i) {
+            if (imageByte[i] < 0) {// 调整异常数据
+                imageByte[i] += 256;
+            }
+        }
+        String fileName = "D:\\0\\image\\user\\"+imageName;
+        try {
+            File imageFile = new File(fileName);
+            if (!imageFile.exists()) {
+                imageFile.createNewFile();
+            }
+            OutputStream imageStream = new FileOutputStream(imageFile);
+            imageStream.write(imageByte);
+            imageStream.flush();
+            imageStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

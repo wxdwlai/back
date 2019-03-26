@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.ui.Model;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +33,10 @@ public interface RecipeDao extends JpaRepository<Recipe,Integer> {
 
     @Query(nativeQuery = true, value = "select r.* from recipe as r")
     List<Recipe> findAllRecipe();
+
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true,value = "insert into recipe(uid,title,intro,ings,image) values(?1,?2,?3,?4,?5)")
+    void inserRecipe(Integer uid,String title,String intro,String ings,String image);
 
 }
