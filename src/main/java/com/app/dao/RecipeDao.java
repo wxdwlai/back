@@ -39,4 +39,15 @@ public interface RecipeDao extends JpaRepository<Recipe,Integer> {
     @Query(nativeQuery = true,value = "insert into recipe(uid,title,intro,ings,image) values(?1,?2,?3,?4,?5)")
     void inserRecipe(Integer uid,String title,String intro,String ings,String image);
 
+    @Query(nativeQuery = true,value = "select r.* from recipe as r where r.uid = ?1 and r.title=?2 and r.intro=?3 and r.ings=?4")
+    Recipe findByUidAndTitleAndIntroAndIngs(Integer uid,String title,String intro,String ings);
+
+    @Query(nativeQuery = true,value = "select r.* from recipe as r where r.uid = ?1 and r.image=?2")
+    Recipe findByUidAndImage(Integer uid,String image);
+
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true,value = "update recipe set title=?1,intro=?2,ings=?3,image=?4 where recipe.reid = ?5")
+    void updateBasicInfo(String title,String into,String ings,String image,Integer reid);
+
 }

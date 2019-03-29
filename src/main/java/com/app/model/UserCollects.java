@@ -25,7 +25,7 @@ public class UserCollects {
     private boolean type;
 
     @ManyToOne
-    @JsonIgnoreProperties("userCollects")
+    @JsonIgnoreProperties({"userCollects","recipes","viewLogs","comments","commentReplies","userTastes"})
     @JoinColumn(name = "uid",insertable = false,updatable = false,nullable = false)
     private UserInfo userInfo;
 

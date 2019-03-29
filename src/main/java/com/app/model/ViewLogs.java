@@ -28,7 +28,7 @@ public class ViewLogs {
     private Recipe recipe;
 
     @ManyToOne
-    @JsonIgnoreProperties("viewLogs")
+    @JsonIgnoreProperties({"userCollects","recipes","viewLogs","comments","commentReplies","userTastes"})
     @JoinColumn(name = "uid",nullable = false,insertable = false,updatable = false)
     private UserInfo userInfo;
 

@@ -1,11 +1,12 @@
 package com.app.requestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TasteParams {
 //    private Integer tagId;
     private String key;
-    private List<Integer> list;
+    private List<Integer> list = new ArrayList<>();
 
     public String getKey() {
         return key;

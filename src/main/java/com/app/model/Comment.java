@@ -36,7 +36,7 @@ public class  Comment {
 
     @ManyToOne
     @JoinColumn(name = "puid", nullable = false,insertable = false,updatable = false)
-    @JsonIgnoreProperties(value = {"comments","viewLogs","userCollects","commentReplies"})
+    @JsonIgnoreProperties(value = {"comments","viewLogs","userCollects","commentReplies","recipes","userTastes"})
     private UserInfo userInfo;
 
     @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

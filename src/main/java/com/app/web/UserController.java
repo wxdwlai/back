@@ -12,6 +12,7 @@ import com.app.model.response.Msg;
 import com.app.model.response.SearchHistoryResponse;
 import com.app.model.response.UserDetailResponse;
 import com.app.requestBody.CommentParams;
+import com.app.requestBody.StepParams;
 import com.app.requestBody.TasteParams;
 import com.app.serviceImpl.TokenService;
 import com.app.utils.JwtToken;
@@ -188,9 +189,18 @@ public class UserController {
         UserInfo userInfo = userDao.findByUid(user.getUid());
         Msg response = new Msg();
         String image = user.getToken();
-        putImage(image,user.getImage());
+//        if (image != null && image.length() != 0) {
+//            putImage(image,user.getImage());
+//        }
+        String imageName = user.getUid() + String.valueOf(Math.random())+".jpg";
         if (userInfo != null) {
-            userDao.updateInfo(user.getUid(),user.getUserName(),user.getSex(),user.getIntro(),user.getImage());
+            if (image == null || image.length() == 0) {
+                userDao.updateInfo(user.getUid(),user.getUserName(),user.getSex(),user.getIntro(),user.getImage());
+            }
+            else {
+                putImage(image,imageName);
+                userDao.updateInfo(user.getUid(),user.getUserName(),user.getSex(),user.getIntro(),imageName);
+            }
             response.setSuccess(true);
             response.setErrorCode(0);
             response.setMessage("更新成功");
@@ -215,6 +225,11 @@ public class UserController {
         String token = request.getHeader("x-auth-token");
 //        System.out.println("+++++++++++++++++++++++++++++++++++++++++++\n" +
 //                JwtToken.isTokenValid(token));
+        List<Recipe> recipeList = userInfo.getRecipes();
+        for (int i=0;i<recipeList.size();i++) {
+            String image = "http://" + request.getServerName() + ":" + request.getServerPort() + "/image/" + recipeList.get(i).getImage();
+            recipeList.get(i).setImage(image);
+        }
         if (userInfo != null) {
             String image = userInfo.getImage();
             String host = request.getServletPath();
@@ -666,17 +681,31 @@ public class UserController {
      *保存菜谱的基本信息
      */
     @RequestMapping(value = "putRecipe",method = RequestMethod.PUT)
-    public Msg putRecipe(@RequestBody Recipe recipe) {
-        Msg msg = new Msg();
+    public UserDetailResponse<Recipe> putRecipe(@RequestBody Recipe recipe) {
+        UserDetailResponse msg = new UserDetailResponse();
         String image = recipe.getImage();
         String imageName = String.valueOf(recipe.getUid())+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".jpg";
-        //保存图片
-        putImage(image,imageName);
-        //保存菜谱基本数据
-        recipeDao.inserRecipe(recipe.getUid(),recipe.getTitle(),recipe.getIntro(),recipe.getIngs(),imageName);
-        msg.setSuccess(true);
-        msg.setErrorCode(0);
-        msg.setMessage("上传成功");
+        Recipe re = recipeDao.findByUidAndTitleAndIntroAndIngs(recipe.getUid(),recipe.getTitle(),recipe.getIntro(),recipe.getIngs());
+        if (re == null) {
+            //保存图片
+            putImage(image,imageName);
+            //保存菜谱基本数据
+            recipeDao.inserRecipe(recipe.getUid(),recipe.getTitle(),recipe.getIntro(),recipe.getIngs(),imageName);
+            Recipe r = recipeDao.findByUidAndImage(recipe.getUid(),imageName);
+            msg.setSuccess(true);
+            msg.setErrorCode(0);
+            msg.setMessage("上传成功");
+            msg.setData(r);
+        }
+        else {
+            putImage(image,re.getImage());
+            recipeDao.updateBasicInfo(recipe.getTitle(),recipe.getIntro(),recipe.getIngs(),re.getImage(),re.getReid());
+            Recipe r = recipeDao.findByUidAndImage(recipe.getUid(),re.getImage());
+            msg.setSuccess(true);
+            msg.setErrorCode(0);
+            msg.setMessage("上传成功");
+            msg.setData(r);
+        }
         return msg;
     }
 
@@ -684,16 +713,24 @@ public class UserController {
      * 保存菜谱步骤（重难点）
      */
     @RequestMapping(value = "putSteps",method = RequestMethod.PUT)
-    public Msg putSteps(@RequestBody List<Steps> stepsList) {
+    public Msg putSteps(@RequestParam("reid")Integer reid,@RequestBody String json) {
+        StepParams steps = JSON.parseObject(json,StepParams.class);
+        List<Steps> stepsList = steps.getStepsList();
         Msg msg = new Msg();
         int n = stepsList.size();
         for (int i=0;i<n;i++)
         {
             Steps step = stepsList.get(i);
             String image = step.getStepImgs();
-            String imageName = String.valueOf(step.getReid())+"-"+String.valueOf(i+1)+".jpg";
-            stepsDao.inserStep(step.getReid(),i+1,step.getSteps(),imageName);
-            putImage(image,imageName);
+            String imageName = String.valueOf(reid)+"-"+String.valueOf(i+1)+".jpg";
+
+            if (image.length() != 0) {
+                putImage(image,imageName);
+                stepsDao.inserStep(reid,i+1,step.getSteps(),imageName);
+            }
+            else {
+                stepsDao.inserStep(reid,i+1,step.getSteps(),null);
+            }
         }
         return msg;
     }
@@ -718,6 +755,7 @@ public class UserController {
         }
         return msg;
     }
+
 
     //base64格式保存图片到本地服务器中
     void putImage(String image,String imageName) {

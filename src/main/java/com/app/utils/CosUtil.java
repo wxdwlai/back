@@ -56,6 +56,10 @@ public class CosUtil {
         return re;
     }
 
+    /**
+     * 余弦相似度计算
+     * @return
+     */
     public double similarity() {
         double re = 0.0;
         re = pointMulti()/(squars(v1,n)*squars(v2,n));

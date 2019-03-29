@@ -22,7 +22,7 @@ public class UserTaste {
     private Tags tags;
 
     @ManyToOne
-    @JsonIgnoreProperties("userTastes")
+    @JsonIgnoreProperties({"userCollects","recipes","viewLogs","comments","commentReplies","userTastes"})
     @JoinColumn(name = "uid",insertable = false,updatable = false,nullable = false)
     private UserInfo userInfo;
 

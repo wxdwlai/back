@@ -38,6 +38,14 @@ public interface UserDao extends JpaRepository<UserInfo, Integer> {
     void updateInfo(Integer uid,String name,int sex,String intro,String image);
 
     /**
+     * 图片未更改时
+     */
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,value = "update user_info set user_name=?2,sex=?3, intro=?4 where uid = ?1")
+    void updateInfoImage(Integer uid,String name,int sex,String intro);
+
+    /**
      * 查找所用的用户信息
      */
     @Query(nativeQuery = true, value = "select u.* from user_info as u")

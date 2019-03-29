@@ -2,10 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bcaab674-e87d-48fa-ad27-a59ea617e912" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/response/TypeParams.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/dao/StepsDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/StepsDao.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeTypesDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeTypesDao.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/model/Comment.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Comment.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/model/CommentReply.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/CommentReply.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/model/UserCollects.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/UserCollects.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/requestBody/TasteParams.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/requestBody/TasteParams.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/utils/CosUtil.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/utils/CosUtil.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/web/RecipeController.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/web/RecipeController.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/web/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/app/web/UserController.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/dao/RecipeDao.class" afterPath="$PROJECT_DIR$/target/classes/com/app/dao/RecipeDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/dao/RecipeTypesDao.class" afterPath="$PROJECT_DIR$/target/classes/com/app/dao/RecipeTypesDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/dao/StepsDao.class" afterPath="$PROJECT_DIR$/target/classes/com/app/dao/StepsDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/utils/CosUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/app/utils/CosUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/web/RecipeController$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/web/RecipeController.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/app/web/UserController.class" afterPath="$PROJECT_DIR$/target/classes/com/app/web/UserController.class" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,55 +50,32 @@
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/app/web/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="685" column="37" lean-forward="false" selection-start-line="685" selection-start-column="29" selection-end-line="685" selection-end-column="37" />
+            <state relative-caret-position="133">
+              <caret line="200" column="40" lean-forward="false" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#getUserDetail#0;class#UserController#0" expanded="false" />
                 <element signature="method#postLike#0;class#UserController#0" expanded="false" />
-                <element signature="e#17052#17067#0" expanded="false" />
-                <element signature="method#getMessage#0;class#UserController#0" expanded="false" />
-                <element signature="method#putImage#0;class#UserController#0" expanded="false" />
+                <element signature="e#17805#17820#0" expanded="false" />
+                <element signature="method#getAllTypes#0;class#UserController#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StepsDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/StepsDao.java">
+      <file leaf-file-name="UserPassword.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserPassword.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="18" />
-              <folding>
-                <marker date="1553584070168" expanded="true" signature="470:538" ph="insert into steps... " />
-              </folding>
+            <state relative-caret-position="135">
+              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecipeDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java">
+      <file leaf-file-name="ModelResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/ModelResponse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="557">
-              <caret line="39" column="83" lean-forward="false" selection-start-line="39" selection-start-column="83" selection-end-line="39" selection-end-column="83" />
-              <folding>
-                <marker date="1553564436274" expanded="true" signature="655:769" ph="SELECT t.* F... recipe" />
-                <marker date="1553564436274" expanded="true" signature="872:975" ph="select r.* f... recipe" />
-                <marker date="1553564436274" expanded="true" signature="1067:1247" ph="select r.* f... recipe" />
-                <marker date="1553564436274" expanded="true" signature="1352:1423" ph="select r.* f... recipe" />
-                <marker date="1553564436274" expanded="true" signature="1514:1626" ph="select re.* recommend" />
-                <marker date="1553564436274" expanded="true" signature="1717:1744" ph="select r.* f... recipe" />
-                <marker date="1553564436274" expanded="true" signature="1855:1924" ph="insert into recipe... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/LoginDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+            <state relative-caret-position="54">
+              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -89,19 +84,20 @@
       <file leaf-file-name="UserDao.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="43" column="30" lean-forward="false" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="30" />
+            <state relative-caret-position="383">
+              <caret line="44" column="89" lean-forward="false" selection-start-line="44" selection-start-column="89" selection-end-line="44" selection-end-column="89" />
               <folding>
-                <marker date="1553409239099" expanded="true" signature="808:858" ph="insert into user_info... " />
-                <marker date="1553409239099" expanded="true" signature="1057:1132" ph="update user_info... " />
-                <marker date="1553409239099" expanded="true" signature="1289:1319" ph="select u.* f... user_info" />
+                <marker date="1553854597785" expanded="true" signature="808:858" ph="insert into user_info... " />
+                <marker date="1553854597785" expanded="true" signature="1057:1132" ph="update user_info... " />
+                <marker date="1553854597785" expanded="true" signature="1319:1384" ph="update user_info... " />
+                <marker date="1553854597785" expanded="true" signature="1533:1563" ph="select u.* f... user_info" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommentParams.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/requestBody/CommentParams.java">
+      <file leaf-file-name="Msg.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/Msg.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="108">
               <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
@@ -110,17 +106,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserInfo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserInfo.java">
+      <file leaf-file-name="UserDetailResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/UserDetailResponse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="33" column="68" lean-forward="false" selection-start-line="33" selection-start-column="68" selection-end-line="33" selection-end-column="68" />
-              <folding>
-                <element signature="e#4362#4363#0" expanded="true" />
-                <element signature="e#4392#4393#0" expanded="true" />
-                <element signature="e#4444#4445#0" expanded="true" />
-                <element signature="e#4482#4483#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="243">
+              <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserTaste.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="24" column="104" lean-forward="false" selection-start-line="24" selection-start-column="104" selection-end-line="24" selection-end-column="104" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewLogs.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="567">
+              <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -128,40 +139,20 @@
       <file leaf-file-name="RecipeController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/app/web/RecipeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2146">
-              <caret line="295" column="51" lean-forward="true" selection-start-line="295" selection-start-column="51" selection-end-line="295" selection-end-column="51" />
+            <state relative-caret-position="-491">
+              <caret line="130" column="29" lean-forward="true" selection-start-line="130" selection-start-column="29" selection-end-line="130" selection-end-column="29" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#11060#11122#0" expanded="false" />
+                <element signature="e#11560#11622#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Recipe.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Recipe.java">
+      <file leaf-file-name="RecipeDetailResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/RecipeDetailResponse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-              <folding>
-                <element signature="e#4787#4788#0" expanded="true" />
-                <element signature="e#4813#4814#0" expanded="true" />
-                <element signature="e#4852#4853#0" expanded="true" />
-                <element signature="e#4882#4883#0" expanded="true" />
-                <element signature="e#4919#4920#0" expanded="true" />
-                <element signature="e#4950#4951#0" expanded="true" />
-                <element signature="e#5000#5001#0" expanded="true" />
-                <element signature="e#5040#5041#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RecipeTags.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="13" column="55" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="55" />
+            <state relative-caret-position="262">
+              <caret line="70" column="24" lean-forward="false" selection-start-line="70" selection-start-column="24" selection-end-line="70" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -194,8 +185,15 @@
       <find>浏览</find>
       <find>viewLogsList</find>
       <find>推荐</find>
-      <find>RequestBody</find>
       <find>image = image.replaceAll(&quot;data:image/jpeg;base64,&quot;, &quot;&quot;);</find>
+      <find>RequestBody</find>
+      <find>json</find>
+      <find>update</find>
+      <find>searchRecipe</find>
+      <find>parseObject</find>
+      <find>getUserInfo</find>
+      <find>recipeDetail</find>
+      <find>getRecipeDetail</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -212,9 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/app/utils/IgnoreSecurity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/utils/LoginRequired.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/config/argumentResolver/CurrentUserMethodArgumentResolver.java" />
         <option value="$PROJECT_DIR$/src/main/resources/redis.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/Recommend.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/primarykey/MessagePrimaryKey.java" />
@@ -229,39 +224,42 @@
         <option value="$PROJECT_DIR$/src/main/java/com/app/config/interceptor/LoginInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/response/RecipeDetailResponse.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/Types.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/RecipeTypes.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/Steps.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/web/SearchHistoryController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/Comment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/utils/JwtToken.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/config/WebConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/ViewLogsDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/CommentReplyDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/CommentReply.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.yml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/UserCollects.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/primarykey/UserCollectsPrimaryKey.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/UserCollectsDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/TagsDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/Tags.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/primarykey/UserTastePrimaryKey.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/requestBody/TasteParams.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/UserTasteDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/Application.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/SearchHistoryDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/utils/CosUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/utils/VectorUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/web/RecipeController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/RecommendDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/model/Recipe.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/model/UserInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/dao/StepsDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/requestBody/StepParams.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/dao/RecipeTypesDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/utils/CosUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/requestBody/TasteParams.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/response/TypeParams.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/Recipe.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/Comment.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/CommentReply.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/UserCollects.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/web/RecipeController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/app/web/UserController.java" />
       </list>
     </option>
@@ -272,7 +270,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="950" />
     <option name="width" value="980" />
     <option name="height" value="1044" />
@@ -318,10 +316,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -636,7 +634,10 @@
       <workItem from="1553320981478" duration="5608000" />
       <workItem from="1553402683789" duration="10739000" />
       <workItem from="1553474101737" duration="10571000" />
-      <workItem from="1553560624410" duration="6529000" />
+      <workItem from="1553560624410" duration="6860000" />
+      <workItem from="1553652260283" duration="13510000" />
+      <workItem from="1553691664788" duration="441000" />
+      <workItem from="1553820343264" duration="13629000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1553561183249</created>
@@ -649,11 +650,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="391720000" />
+    <option name="totallyTimeSpent" value="419631000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-11" y="-11" width="1942" height="1056" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4063232" sideWeight="0.5064795" order="2" side_tool="true" content_ui="tabs" />
@@ -664,20 +664,21 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991362" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52224827" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47769952" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32629108" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6185446" sideWeight="0.49352053" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3147948" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298122" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52816904" sideWeight="0.49352053" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3286385" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26511878" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991362" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -685,12 +686,37 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -704,7 +730,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="64" />
+      <option name="time" value="76" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -714,6 +740,11 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>recipe.getUserInfo().getImage()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>token == &quot;0&quot;</expression-string>
         <language-id>JAVA</language-id>
@@ -742,164 +773,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/ModelResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="767">
-          <caret line="114" column="30" lean-forward="false" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/config/argumentResolver/CurrentUserMethodArgumentResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/config/interceptor/LoginInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="767">
-          <caret line="68" column="47" lean-forward="false" selection-start-line="68" selection-start-column="47" selection-end-line="68" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/config/WebConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="21" column="44" lean-forward="false" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/TagsDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/primarykey/StepsPrimary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Steps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/primarykey/UserCollectsPrimaryKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/primarykey/UserTastePrimaryKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserPassword.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Tags.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserCollects.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#804#805#0" expanded="false" />
-            <element signature="e#830#831#0" expanded="false" />
-            <element signature="e#869#870#0" expanded="false" />
-            <element signature="e#899#900#0" expanded="false" />
-            <element signature="e#932#933#0" expanded="false" />
-            <element signature="e#960#961#0" expanded="false" />
-            <element signature="e#1003#1004#0" expanded="false" />
-            <element signature="e#1037#1038#0" expanded="false" />
-            <element signature="e#1066#1067#0" expanded="false" />
-            <element signature="e#1093#1094#0" expanded="false" />
-            <element signature="e#1131#1132#0" expanded="false" />
-            <element signature="e#1163#1164#0" expanded="false" />
-            <element signature="e#1200#1201#0" expanded="false" />
-            <element signature="e#1231#1232#0" expanded="false" />
-            <element signature="e#1281#1282#0" expanded="false" />
-            <element signature="e#1321#1322#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/requestBody/TasteParams.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/UserTasteDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="20" column="30" lean-forward="false" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <marker date="1553075782784" expanded="true" signature="430:481" ph="select ut.* user_taste" />
-            <marker date="1553075782784" expanded="true" signature="575:645" ph="select ut.* user_taste" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/auth0/java-jwt/3.1.0/java-jwt-3.1.0.jar!/com/auth0/jwt/impl/JsonNodeClaim.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.0.8.RELEASE/spring-core-5.0.8.RELEASE.jar!/org/springframework/util/ReflectionUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="222" column="0" lean-forward="false" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/5.0.8.RELEASE/spring-aop-5.0.8.RELEASE.jar!/org/springframework/aop/support/AopUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/5.0.8.RELEASE/spring-aop-5.0.8.RELEASE.jar!/org/springframework/aop/target/SingletonTargetSource.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/5.0.8.RELEASE/spring-aop-5.0.8.RELEASE.jar!/org/springframework/aop/framework/JdkDynamicAopProxy.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
@@ -932,17 +805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="121" column="0" lean-forward="false" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="25" column="65" lean-forward="false" selection-start-line="25" selection-start-column="65" selection-end-line="25" selection-end-column="65" />
-          <folding>
-            <element signature="e#1057#1058#0" expanded="false" />
-            <element signature="e#1083#1084#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -996,14 +858,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecipeTypesDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/Application.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1019,15 +873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1026">
           <caret line="46" column="42" lean-forward="false" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
-          <folding>
-            <marker date="1551840808178" expanded="true" signature="655:727" ph="select vl.* view_logs" />
-            <marker date="1551840808178" expanded="true" signature="655:742" ph="select vl.* view_logs" />
-            <marker date="1551840808178" expanded="true" signature="1010:1086" ph="insert into view_logs... " />
-            <marker date="1551840808178" expanded="true" signature="1265:1297" ph="update view_logs... " />
-            <marker date="1551840808178" expanded="true" signature="1265:1341" ph="update view_logs... " />
-            <marker date="1551840808178" expanded="true" signature="1438:1509" ph="select vl.* view_logs" />
-            <marker date="1551840808178" expanded="true" signature="1438:1533" ph="select vl.* view_logs" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1035,13 +880,157 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1323">
           <caret line="58" column="16" lean-forward="false" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecommendDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="28" column="19" lean-forward="false" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/util/Base64.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="466" column="24" lean-forward="false" selection-start-line="466" selection-start-column="24" selection-end-line="466" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/utils/VectorUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="91" column="9" lean-forward="true" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/requestBody/CommentParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/LoginDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/StepsDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/SearchHistoryResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="28" column="12" lean-forward="false" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/requestBody/StepParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="23" />
           <folding>
-            <marker date="1553329853423" expanded="true" signature="570:668" ph="select disti... search_history" />
-            <marker date="1553329853423" expanded="true" signature="811:903" ph="select disti... search_history" />
-            <marker date="1553329853423" expanded="true" signature="1305:1372" ph="update search_history... " />
-            <marker date="1553329853423" expanded="true" signature="1606:1668" ph="insert into search_history... " />
-            <marker date="1553329853423" expanded="true" signature="1846:1885" ph="delete from search_history... " />
+            <element signature="imports" expanded="false" />
+            <element signature="e#183#184#0" expanded="false" />
+            <element signature="e#215#216#0" expanded="false" />
+            <element signature="e#270#271#0" expanded="false" />
+            <element signature="e#312#313#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecipeTypesDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="19" column="35" lean-forward="false" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="35" />
+          <folding>
+            <marker date="1553687852619" expanded="true" signature="500:552" ph="insert into recipe_types... " />
+            <marker date="1553687852619" expanded="true" signature="641:696" ph="select * fro... recipe_types" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/utils/CosUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="62" column="32" lean-forward="true" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/requestBody/TasteParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/TypeParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
+          <folding>
+            <element signature="e#178#179#0" expanded="true" />
+            <element signature="e#225#226#0" expanded="true" />
+            <element signature="e#257#258#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Comment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="38" column="110" lean-forward="false" selection-start-line="38" selection-start-column="110" selection-end-line="38" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/CommentReply.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="38" column="30" lean-forward="false" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/History.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/RecipeTypes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1053,42 +1042,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecommendDao.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/SearchHistory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="28" column="19" lean-forward="false" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-          <folding>
-            <marker date="1553415088553" expanded="true" signature="505:568" ph="select re.* recommend" />
-            <marker date="1553415088553" expanded="true" signature="719:782" ph="delete from recommend... " />
-            <marker date="1553415088553" expanded="true" signature="916:976" ph="insert into recommend... " />
-            <marker date="1553415088553" expanded="true" signature="1141:1203" ph="update recommend... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/util/Base64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="466" column="24" lean-forward="false" selection-start-line="466" selection-start-column="24" selection-end-line="466" selection-end-column="24" />
+        <state relative-caret-position="135">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/utils/VectorUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Steps.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="91" column="9" lean-forward="true" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
+        <state relative-caret-position="189">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/utils/CosUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Tags.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="60" column="29" lean-forward="false" selection-start-line="60" selection-start-column="29" selection-end-line="60" selection-end-column="29" />
+        <state relative-caret-position="162">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/requestBody/CommentParams.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Token.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Recipe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="111" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserCollects.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="26" lean-forward="true" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserPassword.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserTaste.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="24" column="104" lean-forward="false" selection-start-line="24" selection-start-column="104" selection-end-line="24" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/ViewLogs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/RecipeDetailResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="70" column="24" lean-forward="false" selection-start-line="70" selection-start-column="24" selection-end-line="70" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/ModelResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/Msg.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
@@ -1096,112 +1146,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/RecipeTags.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/response/UserDetailResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
-          <caret line="13" column="55" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="55" />
+          <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/LoginDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="43" column="30" lean-forward="false" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="30" />
-          <folding>
-            <marker date="1553409239099" expanded="true" signature="808:858" ph="insert into user_info... " />
-            <marker date="1553409239099" expanded="true" signature="1057:1132" ph="update user_info... " />
-            <marker date="1553409239099" expanded="true" signature="1289:1319" ph="select u.* f... user_info" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/RecipeDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="557">
-          <caret line="39" column="83" lean-forward="false" selection-start-line="39" selection-start-column="83" selection-end-line="39" selection-end-column="83" />
-          <folding>
-            <marker date="1553564436274" expanded="true" signature="655:769" ph="SELECT t.* F... recipe" />
-            <marker date="1553564436274" expanded="true" signature="872:975" ph="select r.* f... recipe" />
-            <marker date="1553564436274" expanded="true" signature="1067:1247" ph="select r.* f... recipe" />
-            <marker date="1553564436274" expanded="true" signature="1352:1423" ph="select r.* f... recipe" />
-            <marker date="1553564436274" expanded="true" signature="1514:1626" ph="select re.* recommend" />
-            <marker date="1553564436274" expanded="true" signature="1717:1744" ph="select r.* f... recipe" />
-            <marker date="1553564436274" expanded="true" signature="1855:1924" ph="insert into recipe... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/Recipe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="e#4787#4788#0" expanded="true" />
-            <element signature="e#4813#4814#0" expanded="true" />
-            <element signature="e#4852#4853#0" expanded="true" />
-            <element signature="e#4882#4883#0" expanded="true" />
-            <element signature="e#4919#4920#0" expanded="true" />
-            <element signature="e#4950#4951#0" expanded="true" />
-            <element signature="e#5000#5001#0" expanded="true" />
-            <element signature="e#5040#5041#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/model/UserInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="33" column="68" lean-forward="false" selection-start-line="33" selection-start-column="68" selection-end-line="33" selection-end-column="68" />
-          <folding>
-            <element signature="e#4362#4363#0" expanded="true" />
-            <element signature="e#4392#4393#0" expanded="true" />
-            <element signature="e#4444#4445#0" expanded="true" />
-            <element signature="e#4482#4483#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/web/RecipeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2146">
-          <caret line="295" column="51" lean-forward="true" selection-start-line="295" selection-start-column="51" selection-end-line="295" selection-end-column="51" />
+        <state relative-caret-position="-491">
+          <caret line="130" column="29" lean-forward="true" selection-start-line="130" selection-start-column="29" selection-end-line="130" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#11060#11122#0" expanded="false" />
+            <element signature="e#11560#11622#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/StepsDao.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/app/dao/UserDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="18" />
+        <state relative-caret-position="383">
+          <caret line="44" column="89" lean-forward="false" selection-start-line="44" selection-start-column="89" selection-end-line="44" selection-end-column="89" />
           <folding>
-            <marker date="1553584070168" expanded="true" signature="470:538" ph="insert into steps... " />
+            <marker date="1553854597785" expanded="true" signature="808:858" ph="insert into user_info... " />
+            <marker date="1553854597785" expanded="true" signature="1057:1132" ph="update user_info... " />
+            <marker date="1553854597785" expanded="true" signature="1319:1384" ph="update user_info... " />
+            <marker date="1553854597785" expanded="true" signature="1533:1563" ph="select u.* f... user_info" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/app/web/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="685" column="37" lean-forward="false" selection-start-line="685" selection-start-column="29" selection-end-line="685" selection-end-column="37" />
+        <state relative-caret-position="133">
+          <caret line="200" column="40" lean-forward="false" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getUserDetail#0;class#UserController#0" expanded="false" />
             <element signature="method#postLike#0;class#UserController#0" expanded="false" />
-            <element signature="e#17052#17067#0" expanded="false" />
-            <element signature="method#getMessage#0;class#UserController#0" expanded="false" />
-            <element signature="method#putImage#0;class#UserController#0" expanded="false" />
+            <element signature="e#17805#17820#0" expanded="false" />
+            <element signature="method#getAllTypes#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
       </provider>

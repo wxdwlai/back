@@ -25,7 +25,7 @@ public class RecipeTags {
     private Recipe recipe;
 
     @ManyToOne
-    @JsonIgnoreProperties("recipeTags")
+    @JsonIgnoreProperties({"recipeTags","userTastes"})
     @JoinColumn(name = "tagId",nullable = false,insertable = false,updatable = false)
     private Tags tags;
 

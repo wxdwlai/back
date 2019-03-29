@@ -1,10 +1,13 @@
 package com.app.web;
 
+import com.alibaba.fastjson.JSON;
 import com.app.dao.*;
 import com.app.model.*;
 import com.app.model.response.Msg;
 import com.app.model.response.RecipeDetailResponse;
+import com.app.model.response.TypeParams;
 import com.app.model.response.UserDetailResponse;
+import com.app.requestBody.TasteParams;
 import com.app.service.RecipeService;
 import com.app.utils.CosUtil;
 import com.app.utils.JwtToken;
@@ -75,9 +78,9 @@ public class RecipeController {
      * @return
      */
     @RequestMapping(value = "getRecipe",method = RequestMethod.GET)
-    public RecipeDetailResponse getRecipe(@RequestParam("reid") Integer reid, @RequestParam(value = "uid",defaultValue = "0")Integer uid, HttpServletRequest request) {
+    public UserDetailResponse getRecipe(@RequestParam("reid") Integer reid, @RequestParam(value = "uid",defaultValue = "0")Integer uid, HttpServletRequest request) {
 //        Object recipe = recipeDao.findReid(reid);
-        RecipeDetailResponse response = new RecipeDetailResponse();
+        UserDetailResponse response = new UserDetailResponse();
         Recipe recipe = recipeDao.findByReid(reid);
         int visits = recipe.getVisiteds();
         String token = request.getHeader("x-auth-token");
@@ -111,18 +114,22 @@ public class RecipeController {
         List<Comment> comments = recipe.getComments();
         List<String> images = new ArrayList<>();
         for (int i=0;i<comments.size();i++) {
-            String image = recipe.getComments().get(i).getUserInfo().getImage();
-
-            image = "http://" + request.getServerName() + ":" + request.getServerPort()
-                    + "/image/" + image;
-            System.out.println(image);
-            images.add(image);
-        }
-        for (int i=0;i<comments.size();i++) {
-            recipe.getComments().get(i).getUserInfo().setImage(images.get(i));
+            if (recipe.getUserInfo().getUid() != recipe.getComments().get(i).getUserInfo().getUid()) {
+                String image = recipe.getComments().get(i).getUserInfo().getImage();
+                if (image.contains("http://")) {
+                    continue;
+                }
+                image = "http://" + request.getServerName() + ":" + request.getServerPort()
+                        + "/image/" + image;
+                System.out.println(image);
+                recipe.getComments().get(i).getUserInfo().setImage(image);
+            }
         }
         for (Steps steps : stepsSet) {
             if (steps.getStepImgs() != null ) {
+                if (steps.getStepImgs().contains("http://")) {
+                    continue;
+                }
                 String image = "http://" + request.getServerName() + ":"+ request.getServerPort() + "/image/"
                         + steps.getStepImgs();
                 steps.setStepImgs(image);
@@ -137,21 +144,25 @@ public class RecipeController {
         String image = "http://" + request.getServerName() + ":"+ request.getServerPort() + "/image/"
                 + recipe.getImage();
         recipe.setImage(image);
+        //设置maker头像
+        String userImage = "http://"+request.getServerName() + ":" +request.getServerPort() + "/image/"
+                + recipe.getUserInfo().getImage();
+        recipe.getUserInfo().setImage(userImage);
         for (ViewLogs log : viewLogsList) {
             UserInfo userInfo = userDao.findByUid(log.getUid());
             System.out.println(userInfo);
         }
         if (recipe != null) {
-            response.setErrorCode("0");
+            response.setErrorCode(0);
             response.setSuccess(true);
             response.setMessage("查找成功");
-            response.setData(new RecipeDetailResponse.Data(recipe,tagList));
+            response.setData(recipe);
         }
         else {
-            response.setErrorCode("404");
+            response.setErrorCode(404);
             response.setSuccess(true);
             response.setMessage("未找到相应菜谱");
-            response.setData(new RecipeDetailResponse.Data(recipe,tagList));
+            response.setData(null);
         }
 //        if (token.length() == 0 || token != "0") {//游客身份访问菜谱
 //            return response;
@@ -373,6 +384,29 @@ public class RecipeController {
                 recommendDao.updateTime((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
             }
         }
+        return msg;
+    }
+
+    /**
+     * 保存菜谱类型
+     * @param reid
+     * @param json
+     * @return
+     */
+    @RequestMapping(value = "putTypes",method = RequestMethod.PUT)
+    public Msg putTypes(@RequestParam("reid")Integer reid,@RequestBody String json) {
+        Msg msg = new Msg();
+        TypeParams res = JSON.parseObject(json,TypeParams.class);
+        List<Integer> list = res.getList();
+        for (int i=0;i<list.size();i++) {
+            RecipeTypes recipeTypes = recipeTypesDao.findByReidAndTypeId(reid,list.get(i));
+            if (recipeTypes == null) {
+                recipeTypesDao.insert(reid,list.get(i));
+            }
+        }
+        msg.setMessage("成功");
+        msg.setErrorCode(0);
+        msg.setSuccess(true);
         return msg;
     }
 

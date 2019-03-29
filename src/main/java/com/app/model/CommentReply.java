@@ -34,7 +34,7 @@ public class CommentReply {
     private int type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"commentReplies","comments","viewLogs","userCollects","commentReplies"})
+    @JsonIgnoreProperties(value = {"commentReplies","comments","viewLogs","userCollects","commentReplies","userTastes","recipes"})
     @JoinColumn(name = "puid",nullable = false,insertable = false,updatable = false)
     private  UserInfo userInfo;
 
