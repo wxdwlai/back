@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
-    @Query(nativeQuery = true,value = "select c.* from comment as c where c.reid = ?1")
-    List<Comment> getPostMessageByReid(Integer reid);
+    @Query(nativeQuery = true,value = "select c.* from comment as c where c.reid = ?1 and c.puid!=?2 and c.is_delete=0")
+    List<Comment> getPostMessageByReid(Integer reid,Integer uid);
 
     @Transactional
     @Modifying

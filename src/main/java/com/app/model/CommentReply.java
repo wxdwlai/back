@@ -44,7 +44,7 @@ public class CommentReply {
 //    private Comment comment;
 
     @ManyToOne
-    @JsonIgnoreProperties({"commentReplies","userInfo","recipe"})
+    @JsonIgnoreProperties({"commentReplies","userInfo"})
 //    @JsonIgnore
     @JoinColumn(name = "mmid",nullable = false,updatable = false,insertable = false)
     private Comment comment;

@@ -50,4 +50,10 @@ public interface RecipeDao extends JpaRepository<Recipe,Integer> {
     @Query(nativeQuery = true,value = "update recipe set title=?1,intro=?2,ings=?3,image=?4 where recipe.reid = ?5")
     void updateBasicInfo(String title,String into,String ings,String image,Integer reid);
 
+    /**
+     * 查找用户创建的菜谱reid
+     */
+    @Query(nativeQuery = true,value = "select reid from recipe where uid=?1")
+    List<Integer> findReidByUid(Integer uid);
+
 }

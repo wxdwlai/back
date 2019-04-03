@@ -38,6 +38,7 @@ import net.librec.similarity.RecommenderSimilarity;
 import org.apache.ibatis.annotations.Param;
 import org.bouncycastle.util.encoders.Base64Encoder;
 import org.hibernate.Session;
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -268,9 +269,19 @@ public class UserController {
         List<Recipe> collectList = recipeDao.findCollectByUid(uid);
 //        String json = objectMapper.writeValueAsString(collectList);
         for (Recipe recipe : collectList) {
+            if (recipe.getImage().contains("http://")) continue;
             String image = "http://" + request.getServerName() + ":"+ request.getServerPort() + "/image/"
                     + recipe.getImage();
             recipe.setImage(image);
+        }
+        for (int i=0;i<collectList.size();i++) {
+            String image = collectList.get(i).getUserInfo().getImage();
+            if (image.contains("http://")) continue;
+            else {
+                image = "http://" + request.getServerName() + ":"+ request.getServerPort() + "/image/"
+                        + image;
+                collectList.get(i).getUserInfo().setImage(image);
+            }
         }
         Msg<Recipe> response = new Msg<>();
         if (collectList.size() != 0) {
@@ -286,6 +297,64 @@ public class UserController {
             response.setData(collectList);
         }
         return response;
+    }
+
+    @RequestMapping(value ="getLikeMessage", method = RequestMethod.GET )
+    public Msg getLikeMessage(@RequestParam("uid")Integer uid,HttpServletRequest request) {
+        Msg msg = new Msg();
+        List<Integer> reList = recipeDao.findReidByUid(uid);
+        List<UserCollects> list = new ArrayList<>();
+        for (int i=0;i<reList.size();i++) {
+            List<UserCollects> collects = userCollectsDao.findUserLikesByReid(reList.get(i));
+            for (int j=0;j<collects.size();j++) {
+                if (collects.get(j).getUid() != uid) {
+                    list.add(collects.get(j));
+                }
+                else {
+                    continue;
+                }
+            }
+//            list.addAll(collects);
+        }
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
+            String img = "http://" + request.getServerName() + ":" + request.getServerPort()
+                    + "/image/"+ list.get(i).getUserInfo().getImage();
+            list.get(i).getUserInfo().setImage(img);
+        }
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getRecipe().getImage().contains("http://")) {
+                continue;
+            }
+            String image = "http://"+request.getServerName()+":"+request.getServerPort()
+                    +"/image/"+list.get(i).getRecipe().getImage();
+            list.get(i).getRecipe().setImage(image);
+        }
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getRecipe().getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = "http://"+request.getServerName()+":"+request.getServerPort()
+                        +"/image/"+list.get(i).getRecipe().getUserInfo().getImage();
+                list.get(i).getRecipe().getUserInfo().setImage(image);
+            }
+        }
+        if (list.size() != 0) {
+            msg.setData(list);
+            msg.setMessage("查询成功");
+            msg.setSuccess(true);
+            msg.setErrorCode(0);
+        }
+        else {
+            msg.setData(list);
+            msg.setMessage("未找到匹配结果");
+            msg.setSuccess(true);
+            msg.setErrorCode(404);
+        }
+        return msg;
     }
 
     /**
@@ -366,9 +435,16 @@ public class UserController {
         Msg<Recipe> result = new Msg<>();
         if (list.size() != 0) {
             for (Recipe recipe : list) {
+                if (recipe.getImage().contains( "http://")) continue;
                 String image = "http://" +  request.getServerName() + ":" +request.getServerPort() + "/image/"
                         + recipe.getImage();
                 recipe.setImage(image);
+            }
+            for (int i=0;i<list.size();i++) {
+                if (list.get(i).getUserInfo().getImage().contains( "http://")) continue;
+                String image = "http://" +  request.getServerName() + ":" +request.getServerPort() + "/image/"
+                        + list.get(i).getUserInfo().getImage();
+                list.get(i).getUserInfo().setImage(image);
             }
            result.setErrorCode(0);
            result.setData(list);
@@ -495,6 +571,9 @@ public class UserController {
         List<CommentReply> replyList = new ArrayList<>();
         List<String> images = new ArrayList<>();
         for (int i=0;i<list.size();i++) {
+            if (list.get(i).getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
             String img = "http://" + request.getServerName() + ":" + request.getServerPort()
                     + "/image/"+ list.get(i).getUserInfo().getImage();
             images.add(img);
@@ -503,6 +582,26 @@ public class UserController {
             list.get(i).getUserInfo().setImage(images.get(i));
             if (list.get(i).getPuid() != uid) {
                 replyList.add(list.get(i));
+            }
+        }
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getComment().getRecipe().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String img = "http://" + request.getServerName() + ":" + request.getServerPort()
+                        + "/image/"+ list.get(i).getComment().getRecipe().getImage();
+                list.get(i).getComment().getRecipe().setImage(img);
+            }
+        }
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getComment().getRecipe().getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String img = "http://" + request.getServerName() + ":" + request.getServerPort()
+                        + "/image/"+ list.get(i).getComment().getRecipe().getUserInfo().getImage();
+                list.get(i).getComment().getRecipe().getUserInfo().setImage(img);
             }
         }
         if (replyList.size() != 0) {
@@ -520,6 +619,65 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 菜谱评论类消息接口(3.31日）
+     */
+    @RequestMapping(value = "getRecipeComment",method = RequestMethod.GET)
+    public Msg getRecipeComment(@RequestParam("uid")Integer uid,HttpServletRequest request) {
+        Msg msg = new Msg();
+        List<Integer> reList = new ArrayList<>();
+        List<Comment> comments = new ArrayList<>();
+        reList = recipeDao.findReidByUid(uid);
+        int n = reList.size();
+        for (int i=0;i<n;i++) {
+            List<Comment> comment = commentDao.getPostMessageByReid(reList.get(i),uid);
+
+            comments.addAll(comment);
+        }
+        for (int i=0;i<comments.size();i++) {
+            if (comments.get(i).getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = "http://"+request.getServerName()+":"+request.getServerPort()+"/image/"
+                        +comments.get(i).getUserInfo().getImage();
+                comments.get(i).getUserInfo().setImage(image);
+            }
+        }
+        for (int i=0;i<comments.size();i++) {
+            if (comments.get(i).getRecipe().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = "http://"+request.getServerName()+":"+request.getServerPort()+"/image/"
+                        +comments.get(i).getRecipe().getImage();
+                comments.get(i).getRecipe().setImage(image);
+            }
+        }
+        for (int i=0;i<comments.size();i++) {
+            if (comments.get(i).getRecipe().getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = "http://"+request.getServerName()+":"+request.getServerPort()
+                        +"/image/"+comments.get(i).getRecipe().getUserInfo().getImage();
+                comments.get(i).getRecipe().getUserInfo().setImage(image);
+            }
+        }
+        if (comments.size() != 0) {
+            msg.setSuccess(true);
+            msg.setErrorCode(0);
+            msg.setMessage("找到菜谱评论信息");
+            msg.setData(comments);
+        }
+        else {
+            msg.setSuccess(true);
+            msg.setErrorCode(404);
+            msg.setMessage("未找到菜谱评论信息");
+            msg.setData(comments);
+        }
+        return msg;
+    }
     /**
      * 浏览记录接口
      * @param uid

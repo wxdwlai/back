@@ -29,8 +29,7 @@ public class  Comment {
     private boolean isDelete;
 
     @ManyToOne
-    @JsonIgnoreProperties("comments")
-    @JsonIgnore
+    @JsonIgnoreProperties({"comments","stepsList","viewLogs","recipeTypes","recipeTags","userCollects"})
     @JoinColumn(name = "reid", updatable = false, insertable = false,nullable = false)
     private Recipe recipe;
 

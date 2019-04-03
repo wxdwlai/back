@@ -214,6 +214,7 @@ public class RecipeController {
             reid = list.get(i).getReid();
             System.out.println(reid);
             Recipe recipe = recipeDao.findByReid(reid);
+            if (recipe.getImage().contains("http://")) continue;
             String image = "http://" + request.getServerName() + ":" + request.getServerPort() +
                     "/image/"+ recipe.getImage();
             if (recipe != null) {
@@ -222,7 +223,13 @@ public class RecipeController {
                 list1.add(recipe.getReid());
             }
         }
-//        System.out.println(list1);
+        for (int i=0;i<list.size();i++) {
+            String image = list.get(i).getRecipe().getUserInfo().getImage();
+            if (image.contains("http://")) continue;
+            image = "http://"+request.getServerName()+":"+request.getServerPort()
+                    +"/image/"+image;
+            list.get(i).getRecipe().getUserInfo().setImage(image);
+        }
         if (result.size() != 0) {
             response.setData(result);
             response.setErrorCode(0);
@@ -254,9 +261,20 @@ public class RecipeController {
         }
         for (int i = 0; i < list.size(); i++) {
             String image = list.get(i).getImage();
+            if (image.contains("http://")) continue;
             String host = request.getServletPath();
             image = "http://" + request.getServerName() + ":" + request.getServerPort() + "/image/" + image;
             list.get(i).setImage(image);
+        }
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getUserInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = list.get(i).getUserInfo().getImage();
+                image = "http://" + request.getServerName() + ":" + request.getServerPort() + "/image/" + image;
+                list.get(i).getUserInfo().setImage(image);
+            }
         }
         Msg<Recipe> message = new Msg<>();
         if (list.size() != 0) {

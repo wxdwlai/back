@@ -25,13 +25,12 @@ public class UserCollects {
     private boolean type;
 
     @ManyToOne
-    @JsonIgnoreProperties({"userCollects","recipes","viewLogs","comments","commentReplies","userTastes"})
+    @JsonIgnoreProperties({"userCollects","recipes","viewLogs","comments","commentReplies","userTastes","recipes"})
     @JoinColumn(name = "uid",insertable = false,updatable = false,nullable = false)
     private UserInfo userInfo;
 
     @ManyToOne
-    @JsonIgnoreProperties("userCollects")
-    @JsonIgnore
+    @JsonIgnoreProperties({"userCollects","stepsList","viewLogs","recipeTypes","recipeTags","userCollects","comments"})
     @JoinColumn(name = "reid",insertable = false,updatable = false,nullable = false)
     private Recipe recipe;
 
