@@ -246,7 +246,7 @@ public class UserController {
             response.setData(userInfo);
             response.setErrorCode(404);
             response.setSuccess(true);
-            response.setMessage("NOT FOUND");
+            response.setMessage("未找到");
         }
         return response;
     }
