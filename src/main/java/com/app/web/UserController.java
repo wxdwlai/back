@@ -944,4 +944,14 @@ public class UserController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 搜索用户接口
+     */
+    @RequestMapping(value = "searchUser",method = RequestMethod.GET)
+    public Msg searchUser(@RequestParam("keyword")String keyword) {
+        Msg msg = new Msg();
+        
+        return msg;
+    }
 }

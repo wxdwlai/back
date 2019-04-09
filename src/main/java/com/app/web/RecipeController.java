@@ -319,6 +319,33 @@ public class RecipeController {
     }
 
     /**
+     * 根据uid找到用户访问的reid，将菜谱划分为用户已经访问的和未访问的菜谱
+     * 将用户未访问的菜谱进行向量化处理，用于后面计算与已知菜谱的相似度
+     * @param uid
+     * @return
+     */
+    public List<VectorUtil> vectorRecipes(int uid) {
+        List<ViewLogs> viewLogs = viewLogsDao.findByUid(uid);
+        List<Integer> views = new ArrayList<>();
+        for (int i=0;i<viewLogs.size();i++) {
+            views.add(viewLogs.get(i).getReid());
+        }
+        List<Recipe> recipes = recipeDao.findRecipe(views);
+        List<VectorUtil> vectorUtils = new ArrayList<>();
+        for (int i=0;i<recipes.size();i++) {
+            List<RecipeTags> tags = recipes.get(i).getRecipeTags();
+            int[] vector = new int[tags.size()];
+            for (int j=0;j<tags.size();j++) {
+                vector[j] = tags.get(j).getTagId();
+            }
+            VectorUtil vectorUtil = new VectorUtil(10,vector,tags.size());
+            vectorUtil.setReid(recipes.get(i).getReid());
+            vectorUtils.add(vectorUtil);
+        }
+        return vectorUtils;
+    }
+
+    /**
      * 用户口味标签向量化
      */
     public VectorUtil vectorUser(int uid) throws IOException {
@@ -344,6 +371,23 @@ public class RecipeController {
 //            vectorUtil.saveUser();
 //        }
     }
+
+    /**
+     * 根据菜谱reid将菜谱向量化处理
+     */
+    public VectorUtil vectorRecipe(int reid) {
+        Recipe recipe = recipeDao.findByReid(reid);
+        VectorUtil vectorUtil;
+        List<RecipeTags> tags = recipe.getRecipeTags();
+        int[] vector = new int[tags.size()];
+        for (int i=0;i<tags.size();i++) {
+            vector[i] = tags.get(i).getTagId();
+        }
+        vectorUtil = new VectorUtil(10,vector,tags.size());
+        vectorUtil.setReid(reid);
+        return vectorUtil;
+    }
+
 
     /**
      * 计算余弦相似度
@@ -396,13 +440,111 @@ public class RecipeController {
         for (int i=0;i<res.size();i++) {
             Recommend recommend = recommendDao.findByUidAndReid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"));
             if (recommend == null) {
-                recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
+                recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()),1);
             }
             else {
                 recommendDao.updateTime((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
             }
         }
         return msg;
+    }
+
+    /**
+     * func：推荐方法二
+     * 根据用户浏览行为为用户推荐菜谱
+     * 原则：收藏菜谱（相似度大于0.5推荐给用户）
+     *      点赞菜谱（相似度大于0.7推荐给用户）
+     *      浏览次数大于5（相似度大于0.8推荐给用户）
+     * 结果：将上述三种结果保存在用户推荐表中
+     * @param uid
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "testRecommed",method = RequestMethod.GET)
+    public List<Map<String, Object>> recommendByHistory(@RequestParam("uid")Integer uid) throws IOException {
+        List<ViewLogs> viewLogsList = viewLogsDao.findByUidAndPreferDegree(uid);
+        List<VectorUtil> recipes = vectorRecipes(uid);//将用户未访问的菜谱进行向量化处理
+        List<Map<String,Object>> res = new ArrayList<>();//存储推荐结果：reid，uid，相似度计算结果
+        for (int i=0;i<viewLogsList.size();i++) {
+            VectorUtil vectorRecipe;
+            if (viewLogsList.get(i).getPreferDegree() == 3) {
+                System.out.println("-------------------"+i+":"+viewLogsList.get(i).getRecipe().getTitle()+
+                        "-------------------------");
+                vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
+                for (int j=0;j<recipes.size();j++) {
+                    double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
+                    System.out.println("|相似度为："+sim+"|\n");
+                    //对于用户已经收藏的菜谱，计算相似度结果大于0.5的结果推荐给用户
+                    if (sim>=0.5 && recipes.get(j).getReid() != viewLogsList.get(i).getReid()) {
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("sim",sim);
+                        map.put("reid",recipes.get(j).getReid());
+                        map.put("uid",uid);
+                        res.add(map);
+                    }
+                }
+            }
+            //对于点赞菜谱，相似度大于0.7的菜谱推荐给用户
+            else if (viewLogsList.get(i).getPreferDegree() == 2) {
+                System.out.println("-------------------"+i+":"+viewLogsList.get(i).getRecipe().getTitle()+
+                        "-------------------------");
+                vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
+                for (int j=0;j<recipes.size();j++) {
+                    double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
+                    System.out.println("|相似度为："+sim+"|\n");
+                    if (sim>=0.7) {
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("sim",sim);
+                        map.put("reid",recipes.get(j).getReid());
+                        map.put("uid",uid);
+                        res.add(map);
+                    }
+                }
+            }
+            //对于用户访问次数大于等于5次的记录，计算相似度大于0.8的结果推荐给用户
+            else if (viewLogsList.get(i).getVisitedTimes()>=5) {
+                System.out.println("-------------------"+i+":"+viewLogsList.get(i).getRecipe().getTitle()+
+                        "-------------------------");
+                vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
+                for (int j=0;j<recipes.size();j++) {
+                    double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
+                    System.out.println("|相似度为："+sim+"|\n");
+                    if (sim>=0.8) {
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("sim",sim);
+                        map.put("reid",recipes.get(j).getReid());
+                        map.put("uid",uid);
+                        res.add(map);
+                    }
+                }
+            }
+            else {
+                System.out.println(i+":"+viewLogsList.get(i).getPreferDegree());
+            }
+        }
+        //按照相似度从小到大进行排序
+        Collections.sort(res,new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                String s1 = String.valueOf(o1.get("sim"));
+                String s2 = String.valueOf(o2.get("sim"));
+                return s2.compareTo(s1);
+            }
+        });
+        if (res.size() != 0) {
+//            msg.setSuccess(true);
+//            msg.setData(res);
+        }
+        for (int i=0;i<res.size();i++) {
+            Recommend recommend = recommendDao.findByUidAndReid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"));
+            if (recommend == null) {
+                recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()),2);
+            }
+            else {
+                recommendDao.updateTime((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
+            }
+        }
+        return res;
     }
 
     /**

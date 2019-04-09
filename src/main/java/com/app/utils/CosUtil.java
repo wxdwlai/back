@@ -62,6 +62,9 @@ public class CosUtil {
      */
     public double similarity() {
         double re = 0.0;
+        if (squars(v1,n) == 0 || squars(v2,n) ==0) {
+            return 0;
+        }
         re = pointMulti()/(squars(v1,n)*squars(v2,n));
         return re;
     }

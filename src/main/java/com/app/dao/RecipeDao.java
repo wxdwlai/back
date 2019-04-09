@@ -56,4 +56,7 @@ public interface RecipeDao extends JpaRepository<Recipe,Integer> {
     @Query(nativeQuery = true,value = "select reid from recipe where uid=?1")
     List<Integer> findReidByUid(Integer uid);
 
+    @Query(nativeQuery = true,value = "select * from recipe where reid not in ?1")
+    List<Recipe> findRecipe(List<Integer> views);
+
 }

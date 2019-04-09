@@ -53,4 +53,7 @@ public interface ViewLogsDao extends JpaRepository<ViewLogs,Integer> {
     @Query(nativeQuery = true, value = "select vl.* from view_logs as vl where vl.uid=?1 and vl.prefer_degree=1 order by view_time desc")
     List<ViewLogs> findByUid(Integer uid);
 
+    @Query(nativeQuery = true, value = "select vl.* from view_logs as vl where vl.uid=?1 order by view_time desc")
+    List<ViewLogs> findByUidAndPreferDegree(Integer uid);
+
 }

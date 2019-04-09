@@ -25,8 +25,8 @@ public interface RecommendDao extends JpaRepository<Recommend,Integer>{
     //插入一条推荐记录
     @Modifying
     @Transactional
-    @Query(nativeQuery = true,value = "insert into recommend(reid,uid,derive_time) values(?1,?2,?3)")
-    void insertByReidAndUid(Integer reid, Integer uid, Timestamp timestamp);
+    @Query(nativeQuery = true,value = "insert into recommend(reid,uid,derive_time,derive_algorithm) values(?1,?2,?3,?4)")
+    void insertByReidAndUid(Integer reid, Integer uid, Timestamp timestamp,int algorithm);
 
     //更新时间
     @Modifying
