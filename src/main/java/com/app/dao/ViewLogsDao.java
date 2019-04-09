@@ -36,6 +36,13 @@ public interface ViewLogsDao extends JpaRepository<ViewLogs,Integer> {
     void addLogs(Integer uid, Integer reid, Timestamp time,int degree);
 
     /**
+     * 删除点赞浏览记录
+     */
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true,value = "delete from view_logs where uid=?1 and reid=?2 and prefer_degree = ?3")
+    void deleteLogs(Integer uid,Integer reid,int n);
+    /**
      * 更新浏览时间
      */
     @Modifying

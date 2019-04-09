@@ -374,6 +374,7 @@ public class UserController {
             response.setSuccess(true);
             response.setErrorCode(0);
             response.setMessage("取消收藏");
+            viewLogsDao.deleteLogs(uid,reid,3);
             response.setData(list);
         }
         //收藏菜谱
@@ -388,6 +389,7 @@ public class UserController {
             response.setSuccess(true);
             response.setErrorCode(0);
             response.setMessage("收藏菜谱");
+            viewLogsDao.addLogs(uid,reid,new Timestamp(System.currentTimeMillis()),3);
             response.setData(list);
         }
         return response;
@@ -401,6 +403,7 @@ public class UserController {
         Msg response = new Msg();
         UserCollects collects;
         collects = userCollectsDao.findByReidAndUidAndType(reid, uid,true);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         if (collects != null) {
             userCollectsDao.deleteUserLikesByReidAndUid(reid,uid);
             response.setSuccess(true);
@@ -408,6 +411,7 @@ public class UserController {
             response.setData(list);
             response.setErrorCode(0);
             response.setMessage("取消点赞");
+            viewLogsDao.deleteLogs(uid,reid,2);
         }
         else {
             collects = new UserCollects();
@@ -418,6 +422,7 @@ public class UserController {
             collects.setType(true);
             userCollectsDao.save(collects);
             response.setMessage("点赞菜谱");
+            viewLogsDao.addLogs(uid,reid,timestamp,2);
             response.setSuccess(true);
             response.setErrorCode(0);
             List<UserCollects> list = userCollectsDao.findUserLikesByReid(reid);
