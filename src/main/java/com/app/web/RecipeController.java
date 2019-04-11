@@ -472,7 +472,7 @@ public class RecipeController {
                         "-------------------------");
                 vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
                 for (int j=0;j<recipes.size();j++) {
-                    double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
+                    double sim = cosSimilarity(recipes.get(j).getVector(), vectorRecipe.getVector(),vectorRecipe.getNum());
                     System.out.println("|相似度为："+sim+"|\n");
                     //对于用户已经收藏的菜谱，计算相似度结果大于0.5的结果推荐给用户
                     if (sim>=0.5 && recipes.get(j).getReid() != viewLogsList.get(i).getReid()) {

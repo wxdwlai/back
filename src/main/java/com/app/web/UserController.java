@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.*;
 import java.util.Base64.Decoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,10 +55,6 @@ import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -227,6 +224,15 @@ public class UserController {
 //        System.out.println("+++++++++++++++++++++++++++++++++++++++++++\n" +
 //                JwtToken.isTokenValid(token));
         List<Recipe> recipeList = userInfo.getRecipes();
+//        recipeLis
+        Collections.sort(recipeList, new Comparator<Recipe>() {
+            @Override
+            public int compare(Recipe o1, Recipe o2) {
+                int s1 = o1.getReid();
+                int s2 = o2.getReid();
+                return s2-s1;
+            }
+        });
         for (int i=0;i<recipeList.size();i++) {
             String image = "http://" + request.getServerName() + ":" + request.getServerPort() + "/image/" + recipeList.get(i).getImage();
             recipeList.get(i).setImage(image);
@@ -951,7 +957,7 @@ public class UserController {
     @RequestMapping(value = "searchUser",method = RequestMethod.GET)
     public Msg searchUser(@RequestParam("keyword")String keyword) {
         Msg msg = new Msg();
-        
+
         return msg;
     }
 }
