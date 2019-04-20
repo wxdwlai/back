@@ -15,6 +15,20 @@ import com.app.utils.VectorUtil;
 import com.auth0.jwt.interfaces.Claim;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import net.librec.common.LibrecException;
+import net.librec.conf.Configuration;
+import net.librec.data.DataModel;
+import net.librec.data.model.TextDataModel;
+import net.librec.eval.RecommenderEvaluator;
+import net.librec.eval.rating.MAEEvaluator;
+import net.librec.filter.GenericRecommendedFilter;
+import net.librec.filter.RecommendedFilter;
+import net.librec.recommender.Recommender;
+import net.librec.recommender.RecommenderContext;
+import net.librec.recommender.cf.ItemKNNRecommender;
+import net.librec.recommender.item.RecommendedItem;
+import net.librec.similarity.PCCSimilarity;
+import net.librec.similarity.RecommenderSimilarity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -409,41 +423,53 @@ public class RecipeController {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "getRecommend",method = RequestMethod.GET)
+//    @RequestMapping(value = "getRecommend",method = RequestMethod.GET)
     public Msg recommend(int uid) throws IOException {
         Msg msg = new Msg();
         List<VectorUtil> recipes = vectorRecipe();
         VectorUtil user = vectorUser(uid);
-        List<Map<String,Object>> res = new ArrayList<>();
+        boolean isSuccess = false;
+        for (int i=0;i<user.getNum();i++) {
+            if (user.getVector()[i] == 1) {
+                isSuccess = true;
+                break;
+            }
+        }
+        if (isSuccess) {
+            List<Map<String,Object>> res = new ArrayList<>();
 
-        for (int i=0;i<recipes.size();i++) {
-            double sim = cosSimilarity(recipes.get(i).getVector(),user.getVector(),user.getNum());
-            Map<String,Object> map = new HashMap<>();
-            map.put("sim",sim);
-            map.put("reid",recipes.get(i).getReid());
-            map.put("uid",user.getUid());
-            res.add(map);
-        }
-        //按照相似度从小到大进行排序
-        Collections.sort(res,new Comparator<Map<String, Object>>() {
-            @Override
-            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                String s1 = String.valueOf(o1.get("sim"));
-                String s2 = String.valueOf(o2.get("sim"));
-                return s2.compareTo(s1);
+            for (int i=0;i<recipes.size();i++) {
+                double sim = cosSimilarity(recipes.get(i).getVector(),user.getVector(),user.getNum());
+                Map<String,Object> map = new HashMap<>();
+                map.put("sim",sim);
+                map.put("reid",recipes.get(i).getReid());
+                map.put("uid",user.getUid());
+                res.add(map);
             }
-        });
-        if (res.size() != 0) {
-            msg.setSuccess(true);
-            msg.setData(res);
-        }
-        for (int i=0;i<res.size();i++) {
-            Recommend recommend = recommendDao.findByUidAndReid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"));
-            if (recommend == null) {
-                recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()),1);
+            HashSet<Map<String,Object>> h = new HashSet<>(res);
+            res.clear();
+            res.addAll(h);
+            //按照相似度从小到大进行排序
+            Collections.sort(res,new Comparator<Map<String, Object>>() {
+                @Override
+                public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                    String s1 = String.valueOf(o1.get("sim"));
+                    String s2 = String.valueOf(o2.get("sim"));
+                    return s2.compareTo(s1);
+                }
+            });
+            if (res.size() != 0) {
+                msg.setSuccess(true);
+                msg.setData(res);
             }
-            else {
-                recommendDao.updateTime((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
+            for (int i=0;i<res.size()/4;i++) {
+                Recommend recommend = recommendDao.findByUidAndReid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"));
+                if (recommend == null) {
+                    recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()),1);
+                }
+                else {
+                    recommendDao.updateTime((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
+                }
             }
         }
         return msg;
@@ -460,14 +486,15 @@ public class RecipeController {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "testRecommed",method = RequestMethod.GET)
-    public List<Map<String, Object>> recommendByHistory(@RequestParam("uid")Integer uid) throws IOException {
+//    @RequestMapping(value = "testRecommed",method = RequestMethod.GET)
+    public List<Map<String, Object>> recommendByHistory(/*@RequestParam("uid")*/Integer uid) throws IOException {
         List<ViewLogs> viewLogsList = viewLogsDao.findByUidAndPreferDegree(uid);
         List<VectorUtil> recipes = vectorRecipes(uid);//将用户未访问的菜谱进行向量化处理
         List<Map<String,Object>> res = new ArrayList<>();//存储推荐结果：reid，uid，相似度计算结果
         for (int i=0;i<viewLogsList.size();i++) {
             VectorUtil vectorRecipe;
-            if (viewLogsList.get(i).getPreferDegree() == 3) {
+            List<ViewLogs> viewLogs = viewLogsDao.findByUidAndReid(uid,viewLogsList.get(i).getReid());
+            if (viewLogs.size() == 3) {//收藏菜谱并点赞
                 System.out.println("-------------------"+i+":"+viewLogsList.get(i).getRecipe().getTitle()+
                         "-------------------------");
                 vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
@@ -475,7 +502,7 @@ public class RecipeController {
                     double sim = cosSimilarity(recipes.get(j).getVector(), vectorRecipe.getVector(),vectorRecipe.getNum());
                     System.out.println("|相似度为："+sim+"|\n");
                     //对于用户已经收藏的菜谱，计算相似度结果大于0.5的结果推荐给用户
-                    if (sim>=0.5 && recipes.get(j).getReid() != viewLogsList.get(i).getReid()) {
+                    if (sim>=0.5 ) {
                         Map<String,Object> map = new HashMap<>();
                         map.put("sim",sim);
                         map.put("reid",recipes.get(j).getReid());
@@ -485,19 +512,44 @@ public class RecipeController {
                 }
             }
             //对于点赞菜谱，相似度大于0.7的菜谱推荐给用户
-            else if (viewLogsList.get(i).getPreferDegree() == 2) {
-                System.out.println("-------------------"+i+":"+viewLogsList.get(i).getRecipe().getTitle()+
-                        "-------------------------");
-                vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
-                for (int j=0;j<recipes.size();j++) {
-                    double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
-                    System.out.println("|相似度为："+sim+"|\n");
-                    if (sim>=0.7) {
-                        Map<String,Object> map = new HashMap<>();
-                        map.put("sim",sim);
-                        map.put("reid",recipes.get(j).getReid());
-                        map.put("uid",uid);
-                        res.add(map);
+            else if (viewLogs.size() ==2) {
+                boolean isCollect = false;
+                for (int k=0;k<2;k++) {
+                    if (viewLogs.get(k).getPreferDegree() == 3) {
+                        isCollect = true;
+                        break;
+                    }
+                }
+                if (isCollect) {//仅仅收藏
+                    System.out.println("-------------------" + i + ":" + viewLogsList.get(i).getRecipe().getTitle() +
+                            "-------------------------");
+                    vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
+                    for (int j = 0; j < recipes.size(); j++) {
+                        double sim = cosSimilarity(recipes.get(j).getVector(), vectorRecipe.getVector(), vectorRecipe.getNum());
+                        System.out.println("|相似度为：" + sim + "|\n");
+                        if (sim >= 0.7) {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("sim", sim);
+                            map.put("reid", recipes.get(j).getReid());
+                            map.put("uid", uid);
+                            res.add(map);
+                        }
+                    }
+                }
+                else {//仅仅点赞
+                    System.out.println("-------------------"+i+":"+viewLogsList.get(i).getRecipe().getTitle()+
+                            "-------------------------");
+                    vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
+                    for (int j=0;j<recipes.size();j++) {
+                        double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
+                        System.out.println("|相似度为："+sim+"|\n");
+                        if (sim>=0.75) {
+                            Map<String,Object> map = new HashMap<>();
+                            map.put("sim",sim);
+                            map.put("reid",recipes.get(j).getReid());
+                            map.put("uid",uid);
+                            res.add(map);
+                        }
                     }
                 }
             }
@@ -520,8 +572,23 @@ public class RecipeController {
             }
             else {
                 System.out.println(i+":"+viewLogsList.get(i).getPreferDegree());
+                vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
+                for (int j=0;j<recipes.size();j++) {
+                    double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
+                    System.out.println("|相似度为："+sim+"|\n");
+                    if (sim>=0.81) {
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("sim",sim);
+                        map.put("reid",recipes.get(j).getReid());
+                        map.put("uid",uid);
+                        res.add(map);
+                    }
+                }
             }
         }
+        HashSet<Map<String,Object>> h = new HashSet<>(res);
+        res.clear();
+        res.addAll(h);
         //按照相似度从小到大进行排序
         Collections.sort(res,new Comparator<Map<String, Object>>() {
             @Override
@@ -532,7 +599,8 @@ public class RecipeController {
             }
         });
         if (res.size() != 0) {
-//            msg.setSuccess(true);
+//            msg.
+// setSuccess(true);
 //            msg.setData(res);
         }
         for (int i=0;i<res.size();i++) {
@@ -545,6 +613,79 @@ public class RecipeController {
             }
         }
         return res;
+    }
+
+    /**
+     * function：推荐菜谱接口
+     */
+    @RequestMapping(value = "recommend",method = RequestMethod.POST)
+    public Msg<Recipe> recommend(@RequestParam("uid")Integer uid, HttpServletRequest request) throws LibrecException, IOException {
+        recommend(uid);
+        recommendByHistory(uid);
+        Msg<Recipe> response = new Msg();
+        List<Recipe> list = recipeDao.findRecipeByUid(uid);
+
+        // recommender configuration
+        Configuration conf = new Configuration();
+        conf.set("dfs.data.dir","D:/0/db/testData");
+        conf.set("data.input.path","input.n3");
+//        Resource resource = new Resource("rec/cf/itemknn-test.properties");
+//        conf.addResource(resource);
+        // build data model
+        DataModel dataModel = new TextDataModel(conf);
+        dataModel.buildDataModel();
+
+        // set recommendation context
+        RecommenderContext context = new RecommenderContext(conf, dataModel);
+        RecommenderSimilarity similarity = new PCCSimilarity();
+        similarity.buildSimilarityMatrix(dataModel);
+        context.setSimilarity(similarity);
+
+        // training
+        Recommender recommender = new ItemKNNRecommender();
+        recommender.recommend(context);
+
+        // evaluation
+        RecommenderEvaluator evaluator = new MAEEvaluator();
+        recommender.evaluate(evaluator);
+
+        // recommendation results
+        List<RecommendedItem> recommendedItemList = recommender.getRecommendedList();
+        RecommendedFilter filter = new GenericRecommendedFilter();
+        recommendedItemList = filter.filter(recommendedItemList);
+        System.out.println("推荐结果为：\n"+recommendedItemList);
+        for (RecommendedItem item : recommendedItemList) {
+            System.out.println(item.getUserId()+" "+item.getItemId()+" "
+                    + item.getValue());
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
+            System.out.println("时间为："+time);
+//            recommendDao.deleteByReidAndUid(uid);
+//            Recommend recommend = recommendDao.findByUidAndReid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()));
+//            if (recommend == null) {
+//                recommendDao.insertByReidAndUid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
+//            }
+//            else {
+//                recommendDao.updateTime(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
+//            }
+        }
+        if (list.size() != 0) {
+            for (Recipe recipe : list) {
+                String image = "http://"+ request.getServerName() + ":" + request.getServerPort() + "/image/" + recipe.getImage();
+                recipe.setImage(image);
+            }
+            response.setMessage("查找成功");
+            response.setSuccess(true);
+            response.setErrorCode(0);
+            response.setData(list);
+        }
+        else {
+            response.setMessage("没有匹配结果");
+            response.setSuccess(true);
+            response.setErrorCode(404);
+            response.setData(list);
+        }
+        return response;
     }
 
     /**

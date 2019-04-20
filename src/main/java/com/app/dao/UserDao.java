@@ -24,8 +24,8 @@ public interface UserDao extends JpaRepository<UserInfo, Integer> {
      */
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value = "insert into user_info(uid,user_name) values(?1,?2)")
-    void insert(Integer uid, String name);
+    @Query(nativeQuery = true,value = "insert into user_info(user_name,password) values(?1,?2)")
+    void insertUser(String name, String password);
 
     UserInfo getUserInfoByToken(String token);
 
@@ -50,4 +50,12 @@ public interface UserDao extends JpaRepository<UserInfo, Integer> {
      */
     @Query(nativeQuery = true, value = "select u.* from user_info as u")
     List<UserInfo> findAllUser();
+
+    /**
+     * 用户注册
+     */
+//    @Modifying
+//    @Transactional
+//    @Query(nativeQuery = true,value = "insert into user_info(user_name,password) VALUES (?1,?2)")
+//    void insertUser(String name,String password);
 }

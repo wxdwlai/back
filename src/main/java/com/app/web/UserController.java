@@ -102,17 +102,17 @@ public class UserController {
     private StepsDao stepsDao;
     /**
      * function：注册
-     * @param userInfo
+     * @param
      */
-    @RequestMapping(value = "add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-    public Msg register(@RequestBody UserInfo userInfo) throws Exception {
+    @RequestMapping(value = "register",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    public Msg register(@RequestParam("userName")String userName,@RequestParam("password")String password) throws Exception {
         Msg message = new Msg();
-        try {
-            String token = JwtToken.generator(userInfo.getUid());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (userDao.findByUserName(userInfo.getUserName()) != null) {
+//        try {
+//            String token = JwtToken.generator(userInfo.getUid());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        if (userDao.findByUserName(userName) != null) {
             message.setErrorCode(-1);
             message.setMessage("用户已经被注册");
             message.setSuccess(false);
@@ -121,7 +121,8 @@ public class UserController {
             message.setMessage("注册成功");
             message.setErrorCode(0);
             message.setSuccess(true);
-            userDao.save(userInfo);
+            userDao.insertUser(userName,password);
+//            userDao.save(userInfo);
         }
         return message;
     }
@@ -470,76 +471,76 @@ public class UserController {
         return result;
     }
 
-    /**
-     * function：推荐菜谱接口
-     */
-    @RequestMapping(value = "recommend",method = RequestMethod.POST)
-    public Msg<Recipe> recommend(@RequestParam("uid")Integer uid, HttpServletRequest request) throws LibrecException {
-        Msg<Recipe> response = new Msg();
-        List<Recipe> list = recipeDao.findRecipeByUid(uid);
-
-        // recommender configuration
-        Configuration conf = new Configuration();
-        conf.set("dfs.data.dir","D:/0/db/testData");
-        conf.set("data.input.path","input.n3");
-//        Resource resource = new Resource("rec/cf/itemknn-test.properties");
-//        conf.addResource(resource);
-        // build data model
-        DataModel dataModel = new TextDataModel(conf);
-        dataModel.buildDataModel();
-
-        // set recommendation context
-        RecommenderContext context = new RecommenderContext(conf, dataModel);
-        RecommenderSimilarity similarity = new PCCSimilarity();
-        similarity.buildSimilarityMatrix(dataModel);
-        context.setSimilarity(similarity);
-
-        // training
-        Recommender recommender = new ItemKNNRecommender();
-        recommender.recommend(context);
-
-        // evaluation
-        RecommenderEvaluator evaluator = new MAEEvaluator();
-        recommender.evaluate(evaluator);
-
-        // recommendation results
-        List<RecommendedItem> recommendedItemList = recommender.getRecommendedList();
-        RecommendedFilter filter = new GenericRecommendedFilter();
-        recommendedItemList = filter.filter(recommendedItemList);
-        System.out.println("推荐结果为：\n"+recommendedItemList);
-        for (RecommendedItem item : recommendedItemList) {
-            System.out.println(item.getUserId()+" "+item.getItemId()+" "
-            + item.getValue());
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
-            System.out.println("时间为："+time);
-//            recommendDao.deleteByReidAndUid(uid);
-//            Recommend recommend = recommendDao.findByUidAndReid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()));
-//            if (recommend == null) {
-//                recommendDao.insertByReidAndUid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
+//    /**
+//     * function：推荐菜谱接口
+//     */
+//    @RequestMapping(value = "recommend",method = RequestMethod.POST)
+//    public Msg<Recipe> recommend(@RequestParam("uid")Integer uid, HttpServletRequest request) throws LibrecException {
+//        Msg<Recipe> response = new Msg();
+//        List<Recipe> list = recipeDao.findRecipeByUid(uid);
+//
+//        // recommender configuration
+//        Configuration conf = new Configuration();
+//        conf.set("dfs.data.dir","D:/0/db/testData");
+//        conf.set("data.input.path","input.n3");
+////        Resource resource = new Resource("rec/cf/itemknn-test.properties");
+////        conf.addResource(resource);
+//        // build data model
+//        DataModel dataModel = new TextDataModel(conf);
+//        dataModel.buildDataModel();
+//
+//        // set recommendation context
+//        RecommenderContext context = new RecommenderContext(conf, dataModel);
+//        RecommenderSimilarity similarity = new PCCSimilarity();
+//        similarity.buildSimilarityMatrix(dataModel);
+//        context.setSimilarity(similarity);
+//
+//        // training
+//        Recommender recommender = new ItemKNNRecommender();
+//        recommender.recommend(context);
+//
+//        // evaluation
+//        RecommenderEvaluator evaluator = new MAEEvaluator();
+//        recommender.evaluate(evaluator);
+//
+//        // recommendation results
+//        List<RecommendedItem> recommendedItemList = recommender.getRecommendedList();
+//        RecommendedFilter filter = new GenericRecommendedFilter();
+//        recommendedItemList = filter.filter(recommendedItemList);
+//        System.out.println("推荐结果为：\n"+recommendedItemList);
+//        for (RecommendedItem item : recommendedItemList) {
+//            System.out.println(item.getUserId()+" "+item.getItemId()+" "
+//            + item.getValue());
+//            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
+//            System.out.println("时间为："+time);
+////            recommendDao.deleteByReidAndUid(uid);
+////            Recommend recommend = recommendDao.findByUidAndReid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()));
+////            if (recommend == null) {
+////                recommendDao.insertByReidAndUid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
+////            }
+////            else {
+////                recommendDao.updateTime(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
+////            }
+//        }
+//        if (list.size() != 0) {
+//            for (Recipe recipe : list) {
+//                String image = "http://"+ request.getServerName() + ":" + request.getServerPort() + "/image/" + recipe.getImage();
+//                recipe.setImage(image);
 //            }
-//            else {
-//                recommendDao.updateTime(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
-//            }
-        }
-        if (list.size() != 0) {
-            for (Recipe recipe : list) {
-                String image = "http://"+ request.getServerName() + ":" + request.getServerPort() + "/image/" + recipe.getImage();
-                recipe.setImage(image);
-            }
-            response.setMessage("查找成功");
-            response.setSuccess(true);
-            response.setErrorCode(0);
-            response.setData(list);
-        }
-        else {
-            response.setMessage("没有匹配结果");
-            response.setSuccess(true);
-            response.setErrorCode(404);
-            response.setData(list);
-        }
-        return response;
-    }
+//            response.setMessage("查找成功");
+//            response.setSuccess(true);
+//            response.setErrorCode(0);
+//            response.setData(list);
+//        }
+//        else {
+//            response.setMessage("没有匹配结果");
+//            response.setSuccess(true);
+//            response.setErrorCode(404);
+//            response.setData(list);
+//        }
+//        return response;
+//    }
 
     /**
      * function：用户插入评论信息(2.28 待完善）
