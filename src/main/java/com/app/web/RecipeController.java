@@ -462,7 +462,10 @@ public class RecipeController {
                 msg.setSuccess(true);
                 msg.setData(res);
             }
+            System.out.println("-------------采用用户口味标签的推荐结果：-----------");
             for (int i=0;i<res.size()/4;i++) {
+                System.out.println("菜谱ID："+res.get(i).get("reid")+"\t用户ID："+
+                res.get(i).get("uid")+"\t相似度："+res.get(i).get("sim"));
                 Recommend recommend = recommendDao.findByUidAndReid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"));
                 if (recommend == null) {
                     recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()),1);
@@ -491,6 +494,7 @@ public class RecipeController {
         List<ViewLogs> viewLogsList = viewLogsDao.findByUidAndPreferDegree(uid);
         List<VectorUtil> recipes = vectorRecipes(uid);//将用户未访问的菜谱进行向量化处理
         List<Map<String,Object>> res = new ArrayList<>();//存储推荐结果：reid，uid，相似度计算结果
+        System.out.println("-------------采用用户行为进行推荐的结果：-----------");
         for (int i=0;i<viewLogsList.size();i++) {
             VectorUtil vectorRecipe;
             List<ViewLogs> viewLogs = viewLogsDao.findByUidAndReid(uid,viewLogsList.get(i).getReid());
@@ -500,7 +504,7 @@ public class RecipeController {
                 vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
                 for (int j=0;j<recipes.size();j++) {
                     double sim = cosSimilarity(recipes.get(j).getVector(), vectorRecipe.getVector(),vectorRecipe.getNum());
-                    System.out.println("|相似度为："+sim+"|\n");
+                    System.out.println("|菜谱ID："+recipes.get(j).getReid()+"\t用户ID："+uid+"\t相似度为："+sim+"|\n");
                     //对于用户已经收藏的菜谱，计算相似度结果大于0.5的结果推荐给用户
                     if (sim>=0.5 ) {
                         Map<String,Object> map = new HashMap<>();
@@ -526,7 +530,7 @@ public class RecipeController {
                     vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
                     for (int j = 0; j < recipes.size(); j++) {
                         double sim = cosSimilarity(recipes.get(j).getVector(), vectorRecipe.getVector(), vectorRecipe.getNum());
-                        System.out.println("|相似度为：" + sim + "|\n");
+                        System.out.println("|菜谱ID："+recipes.get(j).getReid()+"\t用户ID："+uid+"\t相似度为："+sim+"|\n");
                         if (sim >= 0.7) {
                             Map<String, Object> map = new HashMap<>();
                             map.put("sim", sim);
@@ -542,7 +546,7 @@ public class RecipeController {
                     vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
                     for (int j=0;j<recipes.size();j++) {
                         double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
-                        System.out.println("|相似度为："+sim+"|\n");
+                        System.out.println("|菜谱ID："+recipes.get(j).getReid()+"\t用户ID："+uid+"\t相似度为："+sim+"|\n");
                         if (sim>=0.75) {
                             Map<String,Object> map = new HashMap<>();
                             map.put("sim",sim);
@@ -560,7 +564,7 @@ public class RecipeController {
                 vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
                 for (int j=0;j<recipes.size();j++) {
                     double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
-                    System.out.println("|相似度为："+sim+"|\n");
+                    System.out.println("|菜谱ID："+recipes.get(j).getReid()+"\t用户ID："+uid+"\t相似度为："+sim+"|\n");
                     if (sim>=0.8) {
                         Map<String,Object> map = new HashMap<>();
                         map.put("sim",sim);
@@ -575,7 +579,7 @@ public class RecipeController {
                 vectorRecipe = vectorRecipe(viewLogsList.get(i).getReid());
                 for (int j=0;j<recipes.size();j++) {
                     double sim = cosSimilarity(recipes.get(j).getVector(),vectorRecipe.getVector(),vectorRecipe.getNum());
-                    System.out.println("|相似度为："+sim+"|\n");
+                    System.out.println("|菜谱ID："+recipes.get(j).getReid()+"\t用户ID："+uid+"\t相似度为："+sim+"|\n");
                     if (sim>=0.81) {
                         Map<String,Object> map = new HashMap<>();
                         map.put("sim",sim);
@@ -604,6 +608,7 @@ public class RecipeController {
 //            msg.setData(res);
         }
         for (int i=0;i<res.size();i++) {
+            System.out.println("|菜谱ID："+res.get(i).get("reid")+"\t用户ID："+uid+"\t相似度为："+res.get(i).get("sim"));
             Recommend recommend = recommendDao.findByUidAndReid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"));
             if (recommend == null) {
                 recommendDao.insertByReidAndUid((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()),2);

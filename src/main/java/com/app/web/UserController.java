@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Time;
 import java.util.*;
 import java.util.Base64.Decoder;
 
@@ -100,6 +101,9 @@ public class UserController {
 
     @Autowired
     private StepsDao stepsDao;
+
+    @Autowired
+    private MessageDao messageDao;
     /**
      * function：注册
      * @param
@@ -134,7 +138,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "login",method = RequestMethod.GET)
-    public ModelResponse<UserInfo> login(@RequestParam("name")String name, @RequestParam("password")String password) {
+    public ModelResponse<UserInfo> login(@RequestParam("name")String name, @RequestParam("password")String password,HttpServletRequest request) {
 //        Msg message = new Msg();
         ModelResponse<UserInfo> message = new ModelResponse<>();
         UserInfo user = userDao.findByUserName(name);
@@ -165,6 +169,9 @@ public class UserController {
             else if (userInfo.getSex() == 2){
                 message.setGender("女");
             }
+            String img = "http://" + request.getServerName() + ":" + request.getServerPort()
+                    + "/image/"+ userInfo.getImage();
+            userInfo.setImage(img);
             message.setIntro(userInfo.getIntro());
             message.setIconurl(userInfo.getImage());
             message.setName(userInfo.getUserName());
@@ -959,6 +966,118 @@ public class UserController {
     public Msg searchUser(@RequestParam("keyword")String keyword) {
         Msg msg = new Msg();
 
+        return msg;
+    }
+
+    /**
+     * 获取私信消息
+     */
+    @RequestMapping(value = "getUsers",method = RequestMethod.GET)
+    public Msg getMessageUsers(@RequestParam("uid")Integer uid,HttpServletRequest request) {
+        Msg msg = new Msg();
+        List<Message> list = messageDao.findByUid(uid);
+        if (list != null) {
+            for (int i=0;i<list.size();i++) {
+                if (list.get(i).getReceiverInfo().getImage().contains("http://")) {
+                    continue;
+                }
+                else {
+                    String image = "http://" + request.getServerName() +":" + request.getServerPort() + "/image/" + list.get(i).getReceiverInfo().getImage();
+                    list.get(i).getReceiverInfo().setImage(image);
+                }
+                if (list.get(i).getSenderInfo().getImage().contains("http://")) {
+                    continue;
+                }
+                else {
+                    String image = "http://" + request.getServerName() +":" + request.getServerPort() + "/image/" + list.get(i).getSenderInfo().getImage();
+                    list.get(i).getSenderInfo().setImage(image);
+                }
+            }
+            List<Message> result = new ArrayList<>();
+            result.add(list.get(0));
+            HashSet<Integer> set = new HashSet<>();
+//            set.add(list.get(0))
+            boolean tag = true;
+            for (int i=1;i<list.size();i++) {
+                for (int j=0;j<result.size();j++) {
+                    tag = true;
+                    if (list.get(i).getUid() != uid && ((result.get(j).getUid() != uid && result.get(j).getUid() != list.get(i).getUid()) || (result.get(j).getUuid() != uid && list.get(i).getUid() != result.get(j).getUuid()))) {
+                        tag = true;
+                    }
+                    else if (list.get(i).getUuid() != uid && ((result.get(j).getUid() != uid && result.get(j).getUid() != list.get(i).getUuid()) || (result.get(j).getUuid() != uid && result.get(j).getUuid() != list.get(i).getUuid()))) {
+                        tag = true;
+                    }
+                    else {
+                        tag = false;
+                        break;
+                    }
+                }
+                if (tag == true) {
+                    result.add(list.get(i));
+                }
+            }
+            msg.setSuccess(true);
+            msg.setData(result);
+            if (list.size() != 0) {
+                msg.setErrorCode(0);
+                msg.setMessage("查找成功");
+            }
+            else {
+                msg.setMessage("未找到信息");
+            }
+        }
+        return msg;
+    }
+    /**
+     * 消息发送接口
+     */
+    @RequestMapping(value = "sendMessage",method = RequestMethod.PUT)
+    public Msg sendMessage(@RequestParam("uid")Integer uid,@RequestParam("uuid")Integer uuid,@RequestParam("message")String message) {
+        Msg msg = new Msg();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        messageDao.insertSendedMessage(uid,uuid,message,timestamp);
+        messageDao.insertSendMessage(uid,uuid,message,timestamp);
+        msg.setErrorCode(0);
+        msg.setSuccess(true);
+        msg.setMessage("发送成功");
+        return msg;
+    }
+
+    /**
+     * 获取消息接口
+     */
+    @RequestMapping(value = "getPrivateMessage",method = RequestMethod.GET)
+    public Msg getPrivateMessage(@RequestParam("uid")Integer uid,@RequestParam("uuid")Integer uuid, HttpServletRequest request) {
+        Msg msg = new Msg();
+        List<Message> list = messageDao.findByUidAndUUid(uid,uuid);
+        for (int i=0;i<list.size();i++) {
+            if (list.get(i).getSenderInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = "http://"+request.getServerName()+":"+request.getServerPort()
+                        +"/image/"+list.get(i).getSenderInfo().getImage();
+                list.get(i).getSenderInfo().setImage(image);
+            }
+            if (list.get(i).getReceiverInfo().getImage().contains("http://")) {
+                continue;
+            }
+            else {
+                String image = "http://"+request.getServerName()+":"+request.getServerPort()
+                        +"/image/"+list.get(i).getReceiverInfo().getImage();
+                list.get(i).getReceiverInfo().setImage(image);
+            }
+        }
+        msg.setSuccess(true);
+        msg.setData(list);
+        if (list.size() != 0) {
+            msg.setMessage("查找成功");
+            msg.setErrorCode(0);
+        }
+        else {
+            msg.setErrorCode(404);
+            msg.setMessage("未找到内容");
+        }
         return msg;
     }
 }
