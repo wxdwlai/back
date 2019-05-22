@@ -22,6 +22,11 @@ public interface RecommendDao extends JpaRepository<Recommend,Integer>{
     @Query(nativeQuery = true,value = "delete from recommend where uid=?1 order by derive_time limit 1")
     void deleteByReidAndUid(Integer uid);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true,value = "delete from recommend where uid=?1")
+    void deleteByUid(Integer uid);
+
     //插入一条推荐记录
     @Modifying
     @Transactional

@@ -344,7 +344,11 @@ public class RecipeController {
         for (int i=0;i<viewLogs.size();i++) {
             views.add(viewLogs.get(i).getReid());
         }
-        List<Recipe> recipes = recipeDao.findRecipe(views);
+        List<Recipe> recipes = new ArrayList<>();
+        if (views != null && views.size()>0) {
+            recipes = recipeDao.findRecipe(views);
+        }
+
         List<VectorUtil> vectorUtils = new ArrayList<>();
         for (int i=0;i<recipes.size();i++) {
             List<RecipeTags> tags = recipes.get(i).getRecipeTags();
@@ -463,6 +467,7 @@ public class RecipeController {
                 msg.setData(res);
             }
             System.out.println("-------------采用用户口味标签的推荐结果：-----------");
+            recommendDao.deleteByUid(uid);
             for (int i=0;i<res.size()/4;i++) {
                 System.out.println("菜谱ID："+res.get(i).get("reid")+"\t用户ID："+
                 res.get(i).get("uid")+"\t相似度："+res.get(i).get("sim"));
@@ -474,6 +479,9 @@ public class RecipeController {
                     recommendDao.updateTime((int)res.get(i).get("reid"),(int)res.get(i).get("uid"),new Timestamp(System.currentTimeMillis()));
                 }
             }
+        }
+        else {
+            recommendDao.deleteByUid(uid);
         }
         return msg;
     }
@@ -628,43 +636,44 @@ public class RecipeController {
         recommend(uid);
         recommendByHistory(uid);
         Msg<Recipe> response = new Msg();
-        List<Recipe> list = recipeDao.findRecipeByUid(uid);
+        List<Recipe> list = recipeDao.findRecommendRecipeByUid(uid);
+//        List<Recipe> recommendList = recommendDao.findByUid(uid);
 
         // recommender configuration
-        Configuration conf = new Configuration();
-        conf.set("dfs.data.dir","D:/0/db/testData");
-        conf.set("data.input.path","input.n3");
+//        Configuration conf = new Configuration();
+//        conf.set("dfs.data.dir","D:/0/db/testData");
+//        conf.set("data.input.path","input.n3");
 //        Resource resource = new Resource("rec/cf/itemknn-test.properties");
 //        conf.addResource(resource);
         // build data model
-        DataModel dataModel = new TextDataModel(conf);
-        dataModel.buildDataModel();
+//        DataModel dataModel = new TextDataModel(conf);
+//        dataModel.buildDataModel();
 
         // set recommendation context
-        RecommenderContext context = new RecommenderContext(conf, dataModel);
-        RecommenderSimilarity similarity = new PCCSimilarity();
-        similarity.buildSimilarityMatrix(dataModel);
-        context.setSimilarity(similarity);
+//        RecommenderContext context = new RecommenderContext(conf, dataModel);
+//        RecommenderSimilarity similarity = new PCCSimilarity();
+//        similarity.buildSimilarityMatrix(dataModel);
+//        context.setSimilarity(similarity);
 
         // training
-        Recommender recommender = new ItemKNNRecommender();
-        recommender.recommend(context);
+//        Recommender recommender = new ItemKNNRecommender();
+//        recommender.recommend(context);
 
         // evaluation
-        RecommenderEvaluator evaluator = new MAEEvaluator();
-        recommender.evaluate(evaluator);
+//        RecommenderEvaluator evaluator = new MAEEvaluator();
+//        recommender.evaluate(evaluator);
 
         // recommendation results
-        List<RecommendedItem> recommendedItemList = recommender.getRecommendedList();
-        RecommendedFilter filter = new GenericRecommendedFilter();
-        recommendedItemList = filter.filter(recommendedItemList);
-        System.out.println("推荐结果为：\n"+recommendedItemList);
-        for (RecommendedItem item : recommendedItemList) {
-            System.out.println(item.getUserId()+" "+item.getItemId()+" "
-                    + item.getValue());
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
-            System.out.println("时间为："+time);
+//        List<RecommendedItem> recommendedItemList = recommender.getRecommendedList();
+//        RecommendedFilter filter = new GenericRecommendedFilter();
+//        recommendedItemList = filter.filter(recommendedItemList);
+//        System.out.println("推荐结果为：\n"+recommendedItemList);
+//        for (RecommendedItem item : recommendedItemList) {
+//            System.out.println(item.getUserId()+" "+item.getItemId()+" "
+//                    + item.getValue());
+//            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
+//            System.out.println("时间为："+time);
 //            recommendDao.deleteByReidAndUid(uid);
 //            Recommend recommend = recommendDao.findByUidAndReid(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()));
 //            if (recommend == null) {
@@ -673,7 +682,7 @@ public class RecipeController {
 //            else {
 //                recommendDao.updateTime(Integer.parseInt(item.getItemId()),Integer.parseInt(item.getUserId()), timestamp);
 //            }
-        }
+//        }
         if (list.size() != 0) {
             for (Recipe recipe : list) {
                 String image = "http://"+ request.getServerName() + ":" + request.getServerPort() + "/image/" + recipe.getImage();
